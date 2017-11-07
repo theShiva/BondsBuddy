@@ -15,8 +15,6 @@ namespace BondsBuddy.Api.Controllers
 
             var phonesToReturn = BondsBuddyDataStore.Current.Phones.ToList();
 
-            response.Meta.HttpStatusCode = (int) HttpStatusCode.OK;
-            response.Phones = phonesToReturn;
             return Ok(response);
         }
     }
