@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
 using BondsBuddy.Api.Models;
@@ -34,8 +34,18 @@ namespace BondsBuddy.Api.Controllers
             catch (Exception exception)
             {
                 // TODO: Log Exception details
+                Console.WriteLine(exception.Message);
 
-                return InternalServerError();
+                response.Meta.HttpStatusCode = (int) HttpStatusCode.InternalServerError;
+                response.Meta.ErrorMessage =
+                    "Oops! An unexpected error occurred. Our DevOps is investigating. Please try again later.";
+                response.Meta.ErrorType = "ApiServerError";
+
+                    // Reference: https://stackoverflow.com/a/34890211/325521
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        response));
             }
 
         }
