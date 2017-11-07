@@ -1,6 +1,12 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Web.Http;
+using AutoMapper;
+using BondsBuddy.Api.Models;
+using BondsBuddy.Api.Models.Dtos;
 using BondsBuddy.Api.Models.Responses;
 
 namespace BondsBuddy.Api.Controllers
@@ -13,9 +19,25 @@ namespace BondsBuddy.Api.Controllers
         {
             var response = new PhonesResponse();
 
-            var phonesToReturn = BondsBuddyDataStore.Current.Phones.ToList();
+            try
+            {
+                var phones = BondsBuddyDataStore.Current.Phones.ToList();
 
-            return Ok(response);
+                var phonesToReturn = Mapper.Map<List<Phone>, List<PhoneDto>>(phones);
+
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.OK;
+                response.Phones = phonesToReturn;
+
+                return Ok(response);
+
+            }
+            catch (Exception exception)
+            {
+                // TODO: Log Exception details
+
+                return InternalServerError();
+            }
+
         }
     }
 }
