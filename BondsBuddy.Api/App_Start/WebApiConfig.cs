@@ -24,6 +24,8 @@ namespace BondsBuddy.Api
 
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
+
+            AutoMapperConfig.Initialize();
         }
     }
 }
