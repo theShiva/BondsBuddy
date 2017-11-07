@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AutoMapperConfig.cs" />
     <Compile Include="BondsBuddyDataStore.cs" />
     <Compile Include="Controllers\PhonesController.cs" />
     <Compile Include="Global.asax.cs">
