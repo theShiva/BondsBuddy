@@ -29,11 +29,10 @@ namespace BondsBuddy.Api.Controllers
                 response.Phones = phonesToReturn;
 
                 return Ok(response);
-
             }
             catch (Exception exception)
             {
-                // TODO: Log Exception details
+                    // TODO: Log Exception details
                 Console.WriteLine(exception.Message);
 
                 response.Meta.HttpStatusCode = (int) HttpStatusCode.InternalServerError;
@@ -48,6 +47,35 @@ namespace BondsBuddy.Api.Controllers
                         response));
             }
 
+        }
+
+        [HttpGet, Route("{id}", Name = "GetPhone")]
+        public IHttpActionResult Get(int id)
+        {
+            var response = new PhoneResponse();
+
+            var phone = BondsBuddyDataStore.Current.Phones.FirstOrDefault(a => a.Id == id);
+
+            if (phone == null)
+            {
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.NotFound;
+                response.Meta.ErrorMessage =
+                    $"Phone with Id = {id} not found!";
+                response.Meta.ErrorType = "ApiServerError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.NotFound,
+                        response)
+                        );
+            }
+
+            var phonesToReturn = Mapper.Map<Phone, PhoneDto>(phone);
+
+            response.Meta.HttpStatusCode = (int)HttpStatusCode.OK;
+            response.Phone = phonesToReturn;
+
+            return Ok(response);
         }
     }
 }
