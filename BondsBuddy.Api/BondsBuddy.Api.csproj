@@ -97,6 +97,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Dtos\PhoneDto.cs" />
+    <Compile Include="Models\Dtos\PhoneForCreationDto.cs" />
     <Compile Include="Models\Phone.cs" />
     <Compile Include="Models\Responses\PhonesResponse.cs" />
     <Compile Include="Models\Responses\ResponseBase.cs" />
