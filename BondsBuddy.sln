@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondsBuddy.Api", "BondsBudd
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondsBuddy.Api.Tests", "BondsBuddy.Api.Tests\BondsBuddy.Api.Tests.csproj", "{E0C550EA-663F-40A2-8260-51176F4CA574}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondsBuddy.Core", "BondsBuddy.Core\BondsBuddy.Core.csproj", "{B579B275-E599-4108-A8A0-BBCAC5998D21}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E0C550EA-663F-40A2-8260-51176F4CA574}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0C550EA-663F-40A2-8260-51176F4CA574}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0C550EA-663F-40A2-8260-51176F4CA574}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B579B275-E599-4108-A8A0-BBCAC5998D21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B579B275-E599-4108-A8A0-BBCAC5998D21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B579B275-E599-4108-A8A0-BBCAC5998D21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B579B275-E599-4108-A8A0-BBCAC5998D21}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
