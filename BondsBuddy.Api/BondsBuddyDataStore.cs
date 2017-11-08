@@ -20,7 +20,7 @@ namespace BondsBuddy.Api
                 {
                     Id = 1,
                     PhoneName = "Bill & Melinda Gates Foundation",
-                    PhoneNumber = "2067093140"
+                    RawPhoneNumber = "2067093140"
                 }
             };
         }
