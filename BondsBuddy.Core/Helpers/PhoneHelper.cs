@@ -61,5 +61,17 @@ namespace BondsBuddy.Core.Helpers
 
             return false;
         }
+
+        public static CanonicalPhoneNumber Parse(string phoneNumberToParse, string iso2CountryCode = "US")
+        {
+            CanonicalPhoneNumber parsedPhoneNumber;
+
+            if (TryParse(phoneNumberToParse, out parsedPhoneNumber, iso2CountryCode))
+            {
+                return parsedPhoneNumber;
+            }
+
+            return null;
+        }
     }
 }
