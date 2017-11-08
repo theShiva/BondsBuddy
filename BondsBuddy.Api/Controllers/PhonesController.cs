@@ -132,7 +132,7 @@ namespace BondsBuddy.Api.Controllers
                 if (BondsBuddyDataStore.Current.Phones.Exists(p => p.RawPhoneNumber == parsedPhone.RawPhoneNumber))
                 {
                     response.Meta.HttpStatusCode = (int)HttpStatusCode.Conflict;
-                    response.Meta.ErrorMessage = $"Phone object with Phone Number = {parsedPhone.RawPhoneNumber} already exists in database!";
+                    response.Meta.ErrorMessage = $"Phone object with Phone Number = {newPhone.PhoneNumber} already exists in database!";
                     response.Meta.ErrorType = "DataValidationError";
 
                     return ResponseMessage(
@@ -173,6 +173,54 @@ namespace BondsBuddy.Api.Controllers
                         HttpStatusCode.InternalServerError,
                         response));
             }            
+        }
+
+        [HttpDelete, Route("{id}", Name = "DeletePhone")]
+        public IHttpActionResult DeletePhone(int id)
+        {
+            var response = new PhoneResponse();
+
+            try
+            {
+                var phoneToDelete = BondsBuddyDataStore.Current.Phones.FirstOrDefault(p => p.Id == id);
+
+                if (phoneToDelete == null)
+                {
+                    response.Meta.HttpStatusCode = (int)HttpStatusCode.NotFound;
+                    response.Meta.ErrorMessage =
+                        $"Phone with Id = {id} not found!";
+                    response.Meta.ErrorType = "NotFoundError";
+
+                    return ResponseMessage(
+                        Request.CreateResponse(
+                            HttpStatusCode.NotFound,
+                            response));
+                }
+
+                BondsBuddyDataStore.Current.Phones.Remove(phoneToDelete);
+
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.NoContent;
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.NoContent,
+                        response));
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Meta.ErrorMessage =
+                    "Oops! An unexpected error occurred. Our DevOps is investigating. Please try again later.";
+                response.Meta.ErrorType = "ApiServerError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        response));
+            }
+
         }
     }
 }

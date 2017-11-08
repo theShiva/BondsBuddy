@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using BondsBuddy.Api.Models;
 
 namespace BondsBuddy.Api
@@ -20,6 +17,7 @@ namespace BondsBuddy.Api
                 {
                     Id = 1,
                     PhoneName = "Bill & Melinda Gates Foundation",
+                    NationalFormattedPhoneNumber = "1-(206)709-3140",
                     RawPhoneNumber = "2067093140",
                     CountryCode = 1,
                     Iso2CountryCode = "US",
