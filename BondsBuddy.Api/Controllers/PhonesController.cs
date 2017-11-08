@@ -8,6 +8,7 @@ using AutoMapper;
 using BondsBuddy.Api.Models;
 using BondsBuddy.Api.Models.Dtos;
 using BondsBuddy.Api.Models.Responses;
+using BondsBuddy.Core.Helpers;
 
 namespace BondsBuddy.Api.Controllers
 {
@@ -84,10 +85,10 @@ namespace BondsBuddy.Api.Controllers
         {
             var response = new PhoneResponse();
 
-            if (newPhone == null)
+            if (string.IsNullOrEmpty(newPhone?.PhoneNumber))
             {
                 response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
-                response.Meta.ErrorMessage = "Phone object is null!";
+                response.Meta.ErrorMessage = "Phone Number is null!";
                 response.Meta.ErrorType = "DataValidationError";
 
                 return ResponseMessage(
@@ -108,6 +109,21 @@ namespace BondsBuddy.Api.Controllers
                         HttpStatusCode.BadRequest,
                         response)
                 );                
+            }
+
+                // parse the incoming string and see if it's a valid phone number
+            var parsedPhone = PhoneHelper.Parse(newPhone.PhoneNumber);
+
+            if (parsedPhone == null)
+            {
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
+                response.Meta.ErrorMessage = $"Phone Number = {newPhone.PhoneNumber} is Invalid!";
+                response.Meta.ErrorType = "InvalidDataError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.BadRequest,
+                        response));
             }
 
             try
