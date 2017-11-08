@@ -82,7 +82,7 @@ namespace BondsBuddy.Api.Controllers
 
 
         [HttpPost, Route("", Name = "SaveSinglePhone")]
-        public IHttpActionResult Save([FromBody] PhoneForCreationDto newPhone)
+        public IHttpActionResult SavePhone([FromBody] PhoneForCreationDto newPhone)
         {
             var response = new PhoneResponse();
 
