@@ -9,6 +9,7 @@ using BondsBuddy.Api.Models;
 using BondsBuddy.Api.Models.Dtos;
 using BondsBuddy.Api.Models.Responses;
 using BondsBuddy.Core.Helpers;
+using BondsBuddy.Core.Models;
 
 namespace BondsBuddy.Api.Controllers
 {
@@ -128,10 +129,10 @@ namespace BondsBuddy.Api.Controllers
 
             try
             {
-                if (BondsBuddyDataStore.Current.Phones.Exists(p => p.PhoneNumber == newPhone.PhoneNumber))
+                if (BondsBuddyDataStore.Current.Phones.Exists(p => p.RawPhoneNumber == parsedPhone.RawPhoneNumber))
                 {
                     response.Meta.HttpStatusCode = (int)HttpStatusCode.Conflict;
-                    response.Meta.ErrorMessage = $"Phone object with Phone Number = {newPhone.PhoneNumber} already exists in database!";
+                    response.Meta.ErrorMessage = $"Phone object with Phone Number = {parsedPhone.RawPhoneNumber} already exists in database!";
                     response.Meta.ErrorType = "DataValidationError";
 
                     return ResponseMessage(
@@ -140,9 +141,9 @@ namespace BondsBuddy.Api.Controllers
                             response));
                 }
 
-                var maxPhoneId = BondsBuddyDataStore.Current.Phones.Max(a => a.Id);
+                int maxPhoneId = BondsBuddyDataStore.Current.Phones.Any() ? BondsBuddyDataStore.Current.Phones.Max(a => a.Id) : 0 ;
 
-                var phoneToCreate = Mapper.Map<PhoneForCreationDto, Phone>(newPhone);
+                var phoneToCreate = Mapper.Map<CanonicalPhoneNumber, Phone>(parsedPhone);
 
                 phoneToCreate.Id = ++maxPhoneId;
 
