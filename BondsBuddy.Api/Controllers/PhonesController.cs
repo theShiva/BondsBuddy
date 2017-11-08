@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Description;
 using AutoMapper;
 using BondsBuddy.Api.Models;
 using BondsBuddy.Api.Models.Dtos;
@@ -13,10 +14,19 @@ using BondsBuddy.Core.Models;
 
 namespace BondsBuddy.Api.Controllers
 {
+    /// <summary>
+    /// Phones Resource
+    /// </summary>
     [RoutePrefix("api/v1/phones")]
     public class PhonesController : ApiController
     {
+        /// <summary>
+        /// Get all Phones
+        /// </summary>
+        /// <remarks>Gets a list of all Phones</remarks>
+        /// <returns></returns>
         [HttpGet, Route("", Name = "GetAllPhones")]
+        [ResponseType(typeof(PhonesResponse))]
         public IHttpActionResult Get()
         {
             var response = new PhonesResponse();
@@ -51,7 +61,13 @@ namespace BondsBuddy.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Gets a Phone by Id (not number)
+        /// </summary>
+        /// <param name="id">The Id of the Phone to get</param>
+        /// <returns></returns>
         [HttpGet, Route("{id}", Name = "GetPhone")]
+        [ResponseType(typeof(PhoneResponse))]
         public IHttpActionResult Get(int id)
         {
             var response = new PhoneResponse();
@@ -80,8 +96,13 @@ namespace BondsBuddy.Api.Controllers
             return Ok(response);
         }
 
-
+        /// <summary>
+        /// Saves a new Phone
+        /// </summary>
+        /// <param name="newPhone">The Phone to save</param>
+        /// <returns></returns>
         [HttpPost, Route("", Name = "SaveSinglePhone")]
+        [ResponseType(typeof(PhoneResponse))]
         public IHttpActionResult SavePhone([FromBody] PhoneForCreationDto newPhone)
         {
             var response = new PhoneResponse();
@@ -175,7 +196,13 @@ namespace BondsBuddy.Api.Controllers
             }            
         }
 
+        /// <summary>
+        /// Deletes a Phone
+        /// </summary>
+        /// <param name="id">Id of the Phone to delete from the database.</param>
+        /// <returns></returns>
         [HttpDelete, Route("{id}", Name = "DeletePhone")]
+        [ResponseType(typeof(PhoneResponse))]
         public IHttpActionResult DeletePhone(int id)
         {
             var response = new PhoneResponse();

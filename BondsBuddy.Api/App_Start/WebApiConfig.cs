@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Swashbuckle.Application;
 
 namespace BondsBuddy.Api
 {
@@ -12,6 +13,15 @@ namespace BondsBuddy.Api
 
             // Web API routes
             config.MapHttpAttributeRoutes();
+
+            // Reference: https://stackoverflow.com/a/37416969/325521
+            config.Routes.MapHttpRoute(
+                name: "swagger_root",
+                routeTemplate: "",
+                defaults: null,
+                constraints: null,
+                handler: new RedirectHandler((message => message.RequestUri.ToString()), "swagger"));
+
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

@@ -9,6 +9,7 @@ namespace BondsBuddy.Api.Tests
         [TestMethod]
         public void TestMethod1()
         {
+            // I intended on writing tests, but did get time.... :(
         }
     }
 }
