@@ -77,5 +77,73 @@ namespace BondsBuddy.Api.Controllers
 
             return Ok(response);
         }
+
+
+        [HttpPost, Route("", Name = "SaveSinglePhone")]
+        public IHttpActionResult Save([FromBody] PhoneForCreationDto newPhone)
+        {
+            var response = new PhoneResponse();
+
+            if (newPhone == null)
+            {
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
+                response.Meta.ErrorMessage = "Phone object is null!";
+                response.Meta.ErrorType = "ApiClientError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.BadRequest,
+                        response)
+                );
+            }
+
+            if (!ModelState.IsValid)
+            {
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
+                response.Meta.ErrorMessage = "Phone object contains Invalid data";
+                response.Meta.ErrorType = "ApiClientError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.BadRequest,
+                        response)
+                );                
+            }
+
+            try
+            {
+                var maxPhoneId = BondsBuddyDataStore.Current.Phones.Max(a => a.Id);
+
+                var phoneToCreate = Mapper.Map<PhoneForCreationDto, Phone>(newPhone);
+
+                phoneToCreate.Id = ++maxPhoneId;
+
+                BondsBuddyDataStore.Current.Phones.Add(phoneToCreate);
+
+                var newlyCreatedPhone = BondsBuddyDataStore.Current.Phones.First(a => a.Id == phoneToCreate.Id);
+
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.OK;
+
+                var newlyCreatedPhoneDto = Mapper.Map<Phone, PhoneDto>(newlyCreatedPhone);
+                response.Phone = newlyCreatedPhoneDto;
+
+                return CreatedAtRoute("GetPhone", new { id = phoneToCreate.Id }, response);
+            }
+            catch (Exception exception)
+            {
+                // TODO: Log Exception details
+                Console.WriteLine(exception.Message);
+
+                response.Meta.HttpStatusCode = (int)HttpStatusCode.InternalServerError;
+                response.Meta.ErrorMessage =
+                    "Oops! An unexpected error occurred. Our DevOps is investigating. Please try again later.";
+                response.Meta.ErrorType = "ApiServerError";
+
+                return ResponseMessage(
+                    Request.CreateResponse(
+                        HttpStatusCode.InternalServerError,
+                        response));
+            }            
+        }
     }
 }
