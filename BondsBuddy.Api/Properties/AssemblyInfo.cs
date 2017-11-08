@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BondsBuddy.Api")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("BondsBuddy is a Web API Project that I developed as part of a coding test for 280 Technologies based in San Francisco, CA")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Shiva Manjunath")]
 [assembly: AssemblyProduct("BondsBuddy.Api")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright © Shiva Manjunath and 280 Technologies 2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
