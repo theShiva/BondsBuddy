@@ -88,7 +88,7 @@ namespace BondsBuddy.Api.Controllers
             {
                 response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
                 response.Meta.ErrorMessage = "Phone object is null!";
-                response.Meta.ErrorType = "ApiClientError";
+                response.Meta.ErrorType = "DataValidationError";
 
                 return ResponseMessage(
                     Request.CreateResponse(
@@ -101,7 +101,7 @@ namespace BondsBuddy.Api.Controllers
             {
                 response.Meta.HttpStatusCode = (int)HttpStatusCode.BadRequest;
                 response.Meta.ErrorMessage = "Phone object contains Invalid data";
-                response.Meta.ErrorType = "ApiClientError";
+                response.Meta.ErrorType = "DataValidationError";
 
                 return ResponseMessage(
                     Request.CreateResponse(
@@ -112,6 +112,18 @@ namespace BondsBuddy.Api.Controllers
 
             try
             {
+                if (BondsBuddyDataStore.Current.Phones.Exists(p => p.PhoneNumber == newPhone.PhoneNumber))
+                {
+                    response.Meta.HttpStatusCode = (int)HttpStatusCode.Conflict;
+                    response.Meta.ErrorMessage = $"Phone object with Phone Number = {newPhone.PhoneNumber} already exists in database!";
+                    response.Meta.ErrorType = "DataValidationError";
+
+                    return ResponseMessage(
+                        Request.CreateResponse(
+                            HttpStatusCode.Conflict,
+                            response));
+                }
+
                 var maxPhoneId = BondsBuddyDataStore.Current.Phones.Max(a => a.Id);
 
                 var phoneToCreate = Mapper.Map<PhoneForCreationDto, Phone>(newPhone);
