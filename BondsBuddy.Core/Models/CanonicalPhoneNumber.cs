@@ -12,6 +12,8 @@
 
         public string InternationalPhoneNumber { get; set; }
 
+        public string RawPhoneNumber => E164PhoneNumber?.Remove(0, 1);
+
         public string NationalFormattedPhoneNumber
         {
             get
