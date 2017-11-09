@@ -167,6 +167,7 @@ namespace BondsBuddy.Api.Controllers
                 var phoneToCreate = Mapper.Map<CanonicalPhoneNumber, Phone>(parsedPhone);
 
                 phoneToCreate.Id = ++maxPhoneId;
+                phoneToCreate.PhoneName = newPhone.PhoneName;
 
                 BondsBuddyDataStore.Current.Phones.Add(phoneToCreate);
 
